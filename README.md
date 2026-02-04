@@ -142,6 +142,26 @@ python main.py --ffmpeg "C:\path\to\ffmpeg\bin"
 
 ## 💻 Usage
 
+### First Time Setup: OAuth Authentication
+
+**On first run, you'll see:**
+```
+Please open https://www.google.com/device and input code RSV-***-FDCD
+Press enter when you have completed this step.
+```
+
+**This is normal and secure!** Here's what to do:
+
+1. Open the link: https://www.google.com/device
+2. Enter the code shown (e.g., `RSV-XJF-FDCD`)
+3. Log in with your Google account
+4. Authorize the application
+5. Return to the terminal and press **Enter**
+
+**Why?** YouTube requires authentication to access playlists. This is safer and more reliable than using username/password. The authentication token is cached, so you only need to do this once.
+
+---
+
 ### Interactive Mode (Simplest)
 
 ```bash
@@ -243,13 +263,15 @@ python main.py -p "https://www.youtube.com/playlist?list=PLxxxxx" -o "D:\Videos"
 
 1. **ffmpeg is included**: The script automatically detects and uses the bundled ffmpeg in the `ffmpeg/` folder. No need to download or install separately!
 
-2. **Copyright Notice**: Downloading copyrighted content may be illegal in your jurisdiction. Always check the platform's terms of service and respect copyright laws.
+2. **OAuth Authentication (First Run)**: On first use, you'll be prompted to authorize via https://www.google.com/device. This is required by YouTube and is secure. You only need to do this once - the authorization is cached.
 
-3. **Download Speed**: Speed depends on your internet connection and video resolution.
+3. **Copyright Notice**: Downloading copyrighted content may be illegal in your jurisdiction. Always check the platform's terms of service and respect copyright laws.
 
-4. **Duplicate Prevention**: If a file already exists, the script skips downloading it.
+4. **Download Speed**: Speed depends on your internet connection and video resolution.
 
-5. **OAuth Cache**: The script uses OAuth caching for better YouTube access. Cache files are automatically stored.
+5. **Duplicate Prevention**: If a file already exists, the script skips downloading it.
+
+6. **OAuth Cache**: Authentication tokens are cached locally for convenience. Delete files in the `oauth_cache/` folder to clear the cache.
 
 ---
 
@@ -302,7 +324,32 @@ See `requirements.txt` for exact versions.
 
 ---
 
-## 📄 License
+## ❓ FAQ
+
+### Q: Why does it ask me to open a Google device link?
+**A:** This is OAuth authentication. YouTube requires this for secure access. It's normal and safe. You only need to do it once.
+
+### Q: Can I use my YouTube username/password instead?
+**A:** No, YouTube doesn't allow direct password authentication for third-party apps. OAuth is more secure and is the official way.
+
+### Q: Where is my authorization cached?
+**A:** In the `oauth_cache/` folder. The `.gitignore` file ensures this is never uploaded.
+
+### Q: How do I clear the OAuth cache?
+**A:** Delete the `oauth_cache/` folder or any `.cache` files. Next run will ask for authentication again.
+
+### Q: Is this legal?
+**A:** Downloading YouTube videos is legal if you have permission or the content is in the public domain. Downloading copyrighted content without permission is illegal in most jurisdictions. Always respect copyright laws and YouTube's Terms of Service.
+
+### Q: Does it work with private playlists?
+**A:** Yes, if your Google account has access to the playlist. The OAuth authentication handles this.
+
+### Q: Can I resume interrupted downloads?
+**A:** The script skips videos that already exist. If a download fails, delete the partial file and re-run.
+
+---
+
+## 📝 License
 
 This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
 
@@ -321,10 +368,11 @@ Contributions are welcome! You can:
 ## 📞 Support
 
 If you encounter any issues:
-1. Check the Troubleshooting section above
+1. Check the Troubleshooting and FAQ sections above
 2. Verify ffmpeg is properly installed
 3. Ensure you have the latest Python version (3.8+)
 4. Try running with `-r 480` for lower resolution if downloads fail
+5. Delete `oauth_cache/` and re-authenticate if OAuth errors occur
 
 ---
 
