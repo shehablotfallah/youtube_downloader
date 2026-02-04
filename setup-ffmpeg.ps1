@@ -3,12 +3,16 @@
 
 $ErrorActionPreference = "Stop"
 
-# Find ffmpeg folder
-$ffmpegFolder = Get-ChildItem -Path $PSScriptRoot -Directory -Filter "ffmpeg-*" | Select-Object -First 1
+# Find ffmpeg folder (try 'ffmpeg' first, then 'ffmpeg-*' patterns)
+$ffmpegFolder = Get-ChildItem -Path $PSScriptRoot -Directory -Filter "ffmpeg" -ErrorAction SilentlyContinue | Select-Object -First 1
+
+if (-not $ffmpegFolder) {
+    $ffmpegFolder = Get-ChildItem -Path $PSScriptRoot -Directory -Filter "ffmpeg-*" -ErrorAction SilentlyContinue | Select-Object -First 1
+}
 
 if (-not $ffmpegFolder) {
     Write-Host "❌ Error: ffmpeg folder not found in $PSScriptRoot" -ForegroundColor Red
-    Write-Host "Make sure ffmpeg-*/ folder is in the same directory as this script." -ForegroundColor Yellow
+    Write-Host "Make sure 'ffmpeg' or 'ffmpeg-*/' folder is in the same directory as this script." -ForegroundColor Yellow
     exit 1
 }
 

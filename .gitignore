@@ -21,6 +21,3 @@ downloads/
 # OAuth or cache files
 *.cache
 oauth_cache/
-# FFmpeg (too large for repo)
-ffmpeg/
-ffmpeg-*/

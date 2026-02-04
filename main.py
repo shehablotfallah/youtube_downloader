@@ -67,10 +67,11 @@ def find_ffmpeg(ffmpeg_path: str | None = None) -> str | None:
     if which:
         return which
 
-    # 3) bundled ffmpeg in repo (e.g. ffmpeg-*/bin/ffmpeg(.exe))
-    for candidate in Path(".").glob("ffmpeg-*/bin/ffmpeg*"):
-        if candidate.is_file():
-            return str(candidate)
+    # 3) bundled ffmpeg in repo (supports both ffmpeg/ and ffmpeg-*/ patterns)
+    for pattern in ["ffmpeg/bin/ffmpeg*", "ffmpeg-*/bin/ffmpeg*"]:
+        for candidate in Path(".").glob(pattern):
+            if candidate.is_file():
+                return str(candidate)
 
     return None
 
