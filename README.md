@@ -19,41 +19,38 @@ cd youtube_downloader
 - Extract the ZIP file
 - Open terminal/PowerShell in the extracted folder
 
-### 2️⃣ Install Dependencies (2 minutes)
+### 2️⃣ Install Python Packages (2 minutes)
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### 3️⃣ Set up ffmpeg (Optional but Recommended)
+### 3️⃣ Start Using It! 🎉
 
-**Windows (Easy):**
-```powershell
-powershell -ExecutionPolicy Bypass -File setup-ffmpeg.ps1
-```
+**No ffmpeg setup needed!** It's already included in the `ffmpeg/` folder.
 
-**Linux:**
-```bash
-sudo apt-get install ffmpeg
-```
-
-**macOS:**
-```bash
-brew install ffmpeg
-```
-
-### 4️⃣ Download Your First Playlist
-
-```bash
-python main.py --playlist "https://www.youtube.com/playlist?list=PLxxxxx" --max-resolution 720
-```
-
-Or interactive mode:
+Just run:
 ```bash
 python main.py
 ```
 
+Or with options:
+```bash
+python main.py --playlist "https://www.youtube.com/playlist?list=PLxxxxx" --max-resolution 720
+```
+
 **That's it! Videos will be saved in `downloads/` folder** ✅
+
+---
+
+### ⚙️ Optional: Add ffmpeg to System PATH
+
+If you want `ffmpeg` available system-wide, run **once**:
+```powershell
+powershell -ExecutionPolicy Bypass -File setup-ffmpeg.ps1
+```
+
+This is **optional** - the script works fine without it!
 
 ---
 
@@ -72,7 +69,7 @@ python main.py
 ## 📋 Requirements
 
 - **Python 3.8+** → [Download Python](https://www.python.org/downloads/)
-- **ffmpeg** (included in the project or can be installed separately)
+- **ffmpeg** → **Already included in this project!** (in the `ffmpeg/` folder)
 
 ---
 
@@ -103,31 +100,42 @@ This installs:
 - `pytubefix` - YouTube video extraction
 - `tqdm` - Progress bars
 
-### Step 3: Set up ffmpeg
+### Step 3: (Optional) Add ffmpeg to PATH
 
-#### Option A: Quick Setup Script (Recommended for Windows)
+> **Note:** ffmpeg is **already bundled with this project**. You don't need to download or install it separately!
+
+#### Option A: Automatic Setup (Recommended for Windows)
+
+If you want ffmpeg to be available system-wide, run this **once**:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File setup-ffmpeg.ps1
 ```
 
 Then choose:
-- **1** for current session only (temporary)
-- **2** to add permanently (requires administrator)
+- **1** for current session only (temporary, useful for testing)
+- **2** to add permanently to Windows PATH (requires admin, recommended)
 
-#### Option B: Manual Setup
+**What this does:** Adds the bundled `ffmpeg/bin` folder to your system PATH so you can use `ffmpeg` command anywhere.
 
-**Windows:**
-- Add the ffmpeg executable path to your system `PATH` environment variable
+#### Option B: Use ffmpeg Without Adding to PATH
 
-**Linux:**
+The script will automatically find ffmpeg in the `ffmpeg/` folder, so you **don't need** to run the setup script. Just use the program normally:
+
 ```bash
-sudo apt-get install ffmpeg
+python main.py
 ```
 
-**macOS:**
+#### Option C: External ffmpeg (If You Prefer)
+
+If you already have ffmpeg installed on your system:
+- Windows: It will be used automatically if in PATH
+- Linux: `sudo apt-get install ffmpeg`
+- macOS: `brew install ffmpeg`
+
+Or provide custom path:
 ```bash
-brew install ffmpeg
+python main.py --ffmpeg "C:\path\to\ffmpeg\bin"
 ```
 
 ---
@@ -184,7 +192,12 @@ youtube_downloader/
 ├── LICENSE                      # MIT License
 ├── .gitignore                   # Git ignore rules
 ├── downloads/                   # Output folder (auto-created)
-└── ffmpeg-*/                    # Bundled ffmpeg (optional)
+└── ffmpeg/                      # Bundled ffmpeg executable
+    ├── bin/
+    │   ├── ffmpeg.exe
+    │   ├── ffplay.exe
+    │   └── ffprobe.exe
+    └── doc/                     # Documentation
 ```
 
 ---
@@ -228,7 +241,7 @@ python main.py -p "https://www.youtube.com/playlist?list=PLxxxxx" -o "D:\Videos"
 
 ## ⚠️ Important Notes
 
-1. **ffmpeg is required**: The script needs ffmpeg to merge video and audio streams. Make sure it's installed and accessible.
+1. **ffmpeg is included**: The script automatically detects and uses the bundled ffmpeg in the `ffmpeg/` folder. No need to download or install separately!
 
 2. **Copyright Notice**: Downloading copyrighted content may be illegal in your jurisdiction. Always check the platform's terms of service and respect copyright laws.
 
@@ -244,17 +257,23 @@ python main.py -p "https://www.youtube.com/playlist?list=PLxxxxx" -o "D:\Videos"
 
 ### Error: ❌ ffmpeg not found
 
-**Solution 1 - Use the setup script:**
+This should rarely happen since ffmpeg is bundled.
+
+**Solution 1 - Verify ffmpeg folder exists:**
+- Make sure the `ffmpeg/` folder is in the project root
+- Check that `ffmpeg/bin/ffmpeg.exe` exists
+
+**Solution 2 - Use the setup script:**
 ```powershell
 powershell -ExecutionPolicy Bypass -File setup-ffmpeg.ps1
 ```
 
-**Solution 2 - Specify ffmpeg path directly:**
+**Solution 3 - Specify ffmpeg path directly:**
 ```bash
-python main.py --ffmpeg "C:\path\to\ffmpeg\bin"
+python main.py --ffmpeg ".\ffmpeg\bin"
 ```
 
-**Solution 3 - Install ffmpeg manually:**
+**Solution 4 - Install external ffmpeg:**
 - Windows: Download from [ffmpeg.org](https://ffmpeg.org/download.html)
 - Linux: `sudo apt-get install ffmpeg`
 - macOS: `brew install ffmpeg`
