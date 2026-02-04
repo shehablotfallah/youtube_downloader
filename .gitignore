@@ -1,0 +1,26 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+env/
+venv/
+.venv/
+
+# OS
+Thumbs.db
+desktop.ini
+
+# IDE
+.vscode/
+.idea/
+
+# Downloads and temp
+downloads/
+*.log
+
+# OAuth or cache files
+*.cache
+oauth_cache/
+# FFmpeg (too large for repo)
+ffmpeg/
+ffmpeg-*/
